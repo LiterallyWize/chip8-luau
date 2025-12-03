@@ -1,0 +1,17 @@
+{
+	"name": "chip8",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$path": "build/rojo/src/shared",
+			"Chip8": {
+				"$path": "src"
+			}
+		},
+		"StarterPlayer": {
+			"StarterPlayerScripts": {
+				"$path": "build/rojo/src/client"
+			}
+		}
+	}
+}
