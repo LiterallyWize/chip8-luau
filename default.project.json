@@ -6,6 +6,9 @@
 			"$path": "place/src/shared",
 			"Chip8": {
 				"$path": "src"
+			},
+			"ROM": {
+				"$path": "bin/rom"
 			}
 		},
 		"StarterPlayer": {
