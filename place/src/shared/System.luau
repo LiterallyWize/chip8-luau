@@ -11,7 +11,7 @@ local Players = game:GetService("Players")
 local Chip8 = require(ReplicatedStorage.Chip8)
 local Base64 = require(ReplicatedStorage.Base64)
 
-local PROGRAM = "lunarlander"
+local PROGRAM = "animal_race"
 
 local CYCLE_RATE = 1/60
 local WIDTH, HEIGHT = 64, 32
@@ -25,8 +25,8 @@ local KEY_MAP: {[Enum.KeyCode]: number} = {
 }
 
 local SOUND_ID = "rbxassetid://5229833733"
-local COLOR_ON = Color3.fromHSV(0.12, 0.25, 0.95)
-local COLOR_OFF = Color3.fromHSV(0.65, 0.25, 0.95)
+local COLOR_ON = Color3.fromHSV(0.01, 0.35, 0.8)
+local COLOR_OFF = Color3.fromHSV(0.59, 0.33, 0.35)
 local RESOLUTION_SCALE = 8
 
 local function createImage(): EditableImage
