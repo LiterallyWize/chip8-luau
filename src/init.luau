@@ -2,10 +2,6 @@
 --!native
 --!optimize 2
 
-export type Cycle = {
-	error: string?
-}
-
 type State = {
 	memory: buffer,    -- cpu memory
 	screen: buffer,    -- screen pixels
@@ -26,7 +22,7 @@ type State = {
 
 export type CPU = {
 	state: State,
-	cycle: (self: CPU, keys: {[number]: boolean}) -> Cycle
+	cycle: (self: CPU, keys: {[number]: boolean}) -> string?
 }
 
 local WIDTH, HEIGHT = 64, 32
@@ -36,7 +32,7 @@ local INSTRUCTIONS: {[number]: (state: State, opcode: number) -> number?}
 
 local Chip8 = {}
 
-local function cycle(self: CPU, keys: {[number]: boolean}): Cycle
+local function cycle(self: CPU, keys: {[number]: boolean}): string?
 	local state = self.state
 	local memory = state.memory
 
@@ -53,7 +49,7 @@ local function cycle(self: CPU, keys: {[number]: boolean}): Cycle
 	for _ = 1, INSTRUCTIONS_PER_CYCLE do
 		if state.listener then return {} end
 		if state.counter >= 4095 then
-			return {error = "program counter out of range"}
+			return "program counter out of range"
 		end
 
 		local opcode = buffer.readu8(memory, state.counter) * 2^8 + buffer.readu8(memory, state.counter + 1)
@@ -63,7 +59,7 @@ local function cycle(self: CPU, keys: {[number]: boolean}): Cycle
 			state.counter += 2
 			state.counter = instruction(state, opcode) or state.counter
 		else
-			return {error = string.format("unknown opcode: %04X", opcode)}
+			return string.format("unknown opcode: %04X", opcode)
 		end
 	end
 
@@ -75,7 +71,7 @@ local function cycle(self: CPU, keys: {[number]: boolean}): Cycle
 		state.sound -= 1
 	end
 
-	return {}
+	return nil
 end
 
 function Chip8.load(program: buffer): CPU
