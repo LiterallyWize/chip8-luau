@@ -3,9 +3,7 @@
 --!optimize 2
 
 export type Cycle = {
-	error: string?,
-
-	draw: buffer?
+	error: string?
 }
 
 type State = {
@@ -28,7 +26,7 @@ type State = {
 
 export type CPU = {
 	state: State,
-	cycle: (self: CPU, key: {[number]: boolean}) -> Cycle
+	cycle: (self: CPU, keys: {[number]: boolean}) -> Cycle
 }
 
 local WIDTH, HEIGHT = 64, 32
@@ -38,12 +36,12 @@ local INSTRUCTIONS: {[number]: (state: State, opcode: number) -> number?}
 
 local Chip8 = {}
 
-local function cycle(self: CPU, key: {[number]: boolean}): Cycle
+local function cycle(self: CPU, keys: {[number]: boolean}): Cycle
 	local state = self.state
 	local memory = state.memory
 
-	for index, down in key do
-		buffer.writeu8(state.key, index - 1, down and 1 or 0)
+	for index, down in keys do
+		buffer.writeu8(state.key, index, down and 1 or 0)
 
 		local listener = state.listener
 		if down and listener then
