@@ -15,6 +15,11 @@
 			"StarterPlayerScripts": {
 				"$path": "place/src/client"
 			}
+		},
+		"Players": {
+			"$properties": {
+				"CharacterAutoLoads": false
+			}
 		}
 	}
 }
