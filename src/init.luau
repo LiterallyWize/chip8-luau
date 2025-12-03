@@ -47,7 +47,7 @@ local function cycle(self: CPU, keys: {[number]: boolean}): string?
 	end
 
 	for _ = 1, INSTRUCTIONS_PER_CYCLE do
-		if state.listener then return {} end
+		if state.listener then return nil end
 		if state.counter >= 4095 then
 			return "program counter out of range"
 		end
