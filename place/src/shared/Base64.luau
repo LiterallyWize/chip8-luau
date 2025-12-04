@@ -6,7 +6,7 @@ local ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
 
 local Base64 = {}
 
-function Base64.encode(input: buffer): string
+function Base64.encodeBuffer(input: buffer): string
 	local length = buffer.len(input)
 	local output: {string} = {}
 	local offset = 0
@@ -36,7 +36,11 @@ function Base64.encode(input: buffer): string
 	return table.concat(output)
 end
 
-function Base64.decode(text: string): buffer
+function Base64.encodeString(input: string): string
+	return Base64.encodeBuffer(buffer.fromstring(input))
+end
+
+function Base64.decodeString(text: string): buffer
 	local output = buffer.create(#text * 6 // 8)
 
 	local value = 0
@@ -63,6 +67,10 @@ function Base64.decode(text: string): buffer
 	end
 
 	return output
+end
+
+function Base64.decodeBuffer(input: buffer): buffer
+	return Base64.decodeString(buffer.tostring(input))
 end
 
 return Base64
