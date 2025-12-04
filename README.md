@@ -1,4 +1,4 @@
-### A reasonably fast Luau [**CHIP-8**](https://en.wikipedia.org/wiki/CHIP-8) interpreter & emulator
+### A relatively fast Luau [**CHIP-8**](https://en.wikipedia.org/wiki/CHIP-8) interpreter & emulator
 
 Interpreter is implemented in pure Luau.
 
