@@ -41,6 +41,8 @@ local function buildPlace(target: string?)
 	if fs.isDir(ROM_TEMP_DIR) then
 		fs.removeDir(ROM_TEMP_DIR)
 	end
+
+	fs.writeDir(ROM_DIR)
 	fs.writeDir(ROM_TEMP_DIR)
 
 	if target then

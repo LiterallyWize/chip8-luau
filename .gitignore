@@ -1,4 +1,6 @@
 /bin
+/rom/*
+!/rom/test_opcode.ch8
 
 *.lock
 
