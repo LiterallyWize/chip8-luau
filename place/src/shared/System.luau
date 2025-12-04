@@ -91,6 +91,7 @@ local function init(): never
 	local on, off = getColors()
 
 	local keys: {[number]: boolean} = {}
+	local pixels = buffer.create(WIDTH * HEIGHT * 4)
 
 	UserInputService.InputBegan:Connect(function(input, processed)
 		if input.KeyCode == KEY_RESET then
@@ -110,8 +111,6 @@ local function init(): never
 		end
 	end)
 
-	local pixels = buffer.create(WIDTH * HEIGHT * 4)
-
 	while true do
 		local err = cpu:cycle(keys)
 		assert(not err, err)
@@ -122,12 +121,12 @@ local function init(): never
 			for x = 0, WIDTH - 1 do
 				local index = y * WIDTH + x
 				local value = buffer.readu8(screen, index)
-				buffer.writeu32(pixels, index * 4, value > 0 and on or off)
+				buffer.writeu32(pixels, index * 4, value == 1 and on or off)
 			end
 		end
 
 		image:WritePixelsBuffer(Vector2.zero, image.Size, pixels)
-		sound.Playing = cpu.state.sound == 1
+		sound.Playing = cpu.state.sound > 0
 
 		task.wait(CYCLE_RATE)
 	end
