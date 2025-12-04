@@ -24,10 +24,11 @@ local KEY_MAP: {[Enum.KeyCode]: number} = {
 	[Enum.KeyCode.Z]   = 0xA, [Enum.KeyCode.X]   = 0x0, [Enum.KeyCode.C]     = 0xB, [Enum.KeyCode.V]    = 0xF
 }
 
-local SOUND_ID = "rbxassetid://5229833733"
-local COLOR_ON = Color3.fromHSV(0.01, 0.35, 0.8)
-local COLOR_OFF = Color3.fromHSV(0.59, 0.33, 0.35)
 local RESOLUTION_SCALE = 8
+local COLOR_ON = Color3.fromHSV(0.08, 0.44, 0.88)
+local COLOR_OFF = Color3.fromHSV(0.61, 0.31, 0.35)
+local SOUND_ID = "rbxassetid://5229833733"
+local SOUND_PITCH = 1.1
 
 local function createImage(): EditableImage
 	local gui = Instance.new("ScreenGui")
@@ -54,6 +55,7 @@ local function createSound(): Sound
 	sound.SoundId = SOUND_ID
 	sound.Looped = true
 	sound.Volume = 1
+	sound.PlaybackSpeed = SOUND_PITCH
 	sound.Parent = SoundService
 	return sound
 end
