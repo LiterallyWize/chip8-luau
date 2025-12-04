@@ -11,7 +11,7 @@ local Players = game:GetService("Players")
 local Chip8 = require(ReplicatedStorage.Chip8)
 local Base64 = require(ReplicatedStorage.Base64)
 
-local PROGRAM = "animal_race"
+local PROGRAM = "TARGET"
 
 local CYCLE_RATE = 1/60
 local WIDTH, HEIGHT = 64, 32
@@ -59,8 +59,26 @@ local function createSound(): Sound
 end
 
 local function createCPU(): Chip8.CPU
-	local program = Base64.decode(ReplicatedStorage.ROM[PROGRAM].Value)
+	local program = Base64.decodeString(ReplicatedStorage.ROM[PROGRAM].Value)
 	return Chip8.load(program)
+end
+
+local function getColors(): (number, number)
+	local function channel(v: number): number
+		return (v * 0xFF) // 1
+	end
+
+	local on =
+		channel(COLOR_ON.R) +
+		channel(COLOR_ON.G) * 2^8 +
+		channel(COLOR_ON.B) * 2^16 +
+		0xFF * 2^24
+	local off =
+		channel(COLOR_OFF.R) +
+		channel(COLOR_OFF.G) * 2^8 +
+		channel(COLOR_OFF.B) * 2^16 +
+		0xFF * 2^24
+	return on, off
 end
 
 local function init(): never
@@ -68,6 +86,7 @@ local function init(): never
 
 	local image = createImage()
 	local sound = createSound()
+	local on, off = getColors()
 
 	local keys: {[number]: boolean} = {}
 
@@ -88,13 +107,6 @@ local function init(): never
 			keys[index] = false
 		end
 	end)
-
-	local function channel(v: number): number
-		return (v * 0xFF) // 1
-	end
-
-	local on = channel(COLOR_ON.R) + channel(COLOR_ON.G) * 2^8 + channel(COLOR_ON.B) * 2^16 + 0xFF * 2^24
-	local off = channel(COLOR_OFF.R) + channel(COLOR_OFF.G) * 2^8 + channel(COLOR_OFF.B) * 2^16 + 0xFF * 2^24
 
 	local pixels = buffer.create(WIDTH * HEIGHT * 4)
 
