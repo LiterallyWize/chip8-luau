@@ -22,7 +22,7 @@ local function writeROM(filename: string, name: string)
 end
 
 local function buildTargetROM(target: string)
-	local split = target:lower():split(".")
+	local split = target:split(".")
 	if split[2] ~= "ch8" and not fs.isFile(`{ROM_DIR}/{target}`) then
 		target = split[1] .. ".ch8"
 	end
@@ -32,7 +32,7 @@ end
 
 local function buildAllROM()
 	for _, filename in fs.readDir(ROM_DIR) do
-		local stem = filename:lower():split(".")[1]
+		local stem = filename:split(".")[1]
 		writeROM(filename, stem)
 	end
 end
